@@ -1,0 +1,55 @@
+version: "3.1"
+services:  
+    
+  # postgres
+  postgres:
+    build:
+      context: postgres
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: testuser
+      POSTGRES_PASSWORD: testpassword
+    volumes:
+    - ./postgres/sql/dump.sql:/docker-entrypoint-initdb.d/dump.sql
+    ports:
+      - 5432:5432
+
+  adminer:
+    container_name: adminer
+    image: adminer
+    restart: always
+    depends_on:
+      - postgres
+    ports:
+      - 8080:8080
+
+   # java gateway
+  jgw:
+    build:
+      context: java
+      dockerfile: Dockerfile
+    depends_on:
+      - postgres
+    container_name: jgw
+    restart: always
+    ports: 
+      - 44444:44444
+    environment:
+      - PORT=44444
+
+  # iris
+  iris:
+    init: true
+    container_name: iris
+    build:
+      context: .
+      dockerfile: iris/Dockerfile
+    ports:
+      - 52774:52773
+      - 51774:1972
+    volumes:
+    - ./shared:/shared
+    environment:
+    - ISC_DATA_DIRECTORY=/shared/durable
+    command: --check-caps false --ISCAgent false
