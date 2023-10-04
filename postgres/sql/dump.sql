@@ -14,7 +14,11 @@ CREATE TABLE his.diagnosis (
 
 CREATE TABLE his.center (
     id INT PRIMARY KEY,
-    name VARCHAR(225)
+    code VARCHAR(10),
+    name VARCHAR(225),
+    address VARCHAR(225),
+    postal_code VARCHAR(5),
+    city VARCHAR(50)
 );
 
 CREATE TABLE his.professional (
@@ -77,17 +81,17 @@ CREATE TABLE his.episode (
             ON DELETE SET NULL
 );
 
-INSERT INTO his.patient VALUES (1, 'JUAN', 'LÓPEZ HURTADO', '844324239', 'CALLE SUSPIROS 39 2ºA', 'TERUEL', 'juanitomaravilla@terra.es', '588392', '98345', '1966-11-23', '12345678X', 'M');
-INSERT INTO his.patient VALUES (2, 'MARÍA', 'SANZ PEREDA', '369587495', 'AVENIDA LUIS CANDELAS 22 1ºC', 'MADRID', '', '602147', '28056', '1936-04-12', '87654321X', 'F');
-INSERT INTO his.patient VALUES (3, 'ALBERTO', 'SOTO OSBORNE', '987090809', 'CALLE LEVANTE 4 2', 'VALLADOLID', 'asoto98@gmail.com', '779032', '47005', '1998-09-09', '01234567A', 'M');
+INSERT INTO his.patient (name, lastname, phone, address, city, email, nhc, postal_code, birth_date, dni, gender) VALUES ('JUAN', 'LÓPEZ HURTADO', '844324239', 'CALLE SUSPIROS 39 2ºA', 'TERUEL', 'juanitomaravilla@terra.es', '588392', '98345', '1966-11-23', '12345678X', 'M');
+INSERT INTO his.patient (name, lastname, phone, address, city, email, nhc, postal_code, birth_date, dni, gender) VALUES ('MARÍA', 'SANZ PEREDA', '369587495', 'AVENIDA LUIS CANDELAS 22 1ºC', 'MADRID', '', '602147', '28056', '1936-04-12', '87654321X', 'F');
+INSERT INTO his.patient (name, lastname, phone, address, city, email, nhc, postal_code, birth_date, dni, gender) VALUES ('ALBERTO', 'SOTO OSBORNE', '987090809', 'CALLE LEVANTE 4 2', 'VALLADOLID', 'asoto98@gmail.com', '779032', '47005', '1998-09-09', '01234567A', 'M');
 
 INSERT INTO his.diagnosis VALUES (1, '95.3', 'Esguince auricular');
 INSERT INTO his.diagnosis VALUES (2, '152.1', 'Luxación de conjuntiva');
 INSERT INTO his.diagnosis VALUES (3, '34.14', 'Irritación de premolar');
 
-INSERT INTO his.center VALUES (1, 'Hospital Juan Blanquín');
-INSERT INTO his.center VALUES (2, 'Hospital La Tregua');
-INSERT INTO his.center VALUES (3, 'Clínica Sagrado Riñón');
+INSERT INTO his.center VALUES (1, 'HJB','Hospital Juan Blanquín', 'Avenida de los Tilos 30', '43095', 'Santa Cruz de Tenerife');
+INSERT INTO his.center VALUES (2, 'HLT', 'Hospital La Tregua', 'Calle Muro s/n', '50214', 'Coslada');
+INSERT INTO his.center VALUES (3, 'CSR', 'Clínica Sagrado Riñón', 'Paseo de la Aragonesa 250', '65677', 'Palamós');
 
 INSERT INTO his.professional VALUES (1, 'DIEGO', 'VILLAR GARCÍA', 'DR', '5502124');
 INSERT INTO his.professional VALUES (2, 'SUSANA', 'LAÍNEZ RODRÍGUEZ', 'DR', '6287514');
