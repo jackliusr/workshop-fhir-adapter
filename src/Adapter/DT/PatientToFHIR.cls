@@ -1,4 +1,4 @@
-Class Adapter.DT.PatientToFHIR Extends Ens.DataTransformDTL [ DependsOn = (Adapter.Message.PatientSearchResponse, HS.FHIR.DTL.vR4.Model.Resource.Patient) ]
+Class Adapter.DT.PatientToFHIR Extends Ens.DataTransformDTL [ DependsOn = (Adapter.Message.FHIRResponse, HS.FHIR.DTL.vR4.Model.Resource.Patient) ]
 {
 
 Parameter IGNOREMISSINGSOURCE = 1;
