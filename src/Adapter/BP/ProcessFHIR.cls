@@ -1,5 +1,5 @@
 /// 
-Class Adapter.BP.GetPatient Extends Ens.BusinessProcessBPL
+Class Adapter.BP.ProcessFHIR Extends Ens.BusinessProcessBPL
 {
 
 Storage Default
@@ -7,7 +7,6 @@ Storage Default
 <Type>%Storage.Persistent</Type>
 }
 
-/// BPL Definition
 XData BPL [ XMLNamespace = "http://www.intersystems.com/bpl" ]
 {
 <process language='objectscript' request='HS.FHIRServer.Interop.Request' response='HS.FHIRServer.Interop.Response' height='2000' width='2000' >
@@ -36,28 +35,29 @@ XData BPL [ XMLNamespace = "http://www.intersystems.com/bpl" ]
 <code name='Instantiate Bundle' xpos='470' ypos='500' >
 <![CDATA[ set context.BundleResponse = ##class(HS.FHIR.DTL.vR4.Model.Resource.Bundle).%New()]]>
 </code>
-<foreach name='Bundle loop' property='context.FHIRObject.Resource' key='context.k1' xpos='470' ypos='600' xend='200' yend='1200' >
-<assign name="Create Dynamic Object" property="context.temporalDO" value=" ##class(%DynamicAbstractObject).%FromJSON(context.FHIRObject.Resource.GetAt(context.k1))" action="set" xpos='200' ypos='250' />
-<switch xpos='200' ypos='350' xend='200' yend='1000' >
+<foreach name='Bundle loop' property='context.FHIRObject.Resource' key='context.k1' xpos='470' ypos='600' xend='200' yend='1000' >
+<assign name="Create Dynamic Object" property="context.temporalDO" value="##class(%DynamicAbstractObject).%FromJSON(context.FHIRObject.Resource.GetAt(context.k1))" action="set" xpos='200' ypos='250' />
+<switch xpos='200' ypos='350' xend='200' yend='800' >
 <case condition='context.temporalDO.type = "Patient"' name='Patient' >
 <transform name='Tranform patient' class='Adapter.DT.PatientToFHIR' source='context.temporalDO' target='context.PatientResponse' xpos='335' ypos='500' />
-<transform name='Create entry' class='Adapter.DT.PatientToEntry' source='context.PatientResponse' target='context.PatientEntry' xpos='335' ypos='700' />
-<transform name='Entry to bundle' class='Adapter.DT.EntryToBundle' source='context.PatientEntry' target='context.BundleResponse' xpos='335' ypos='800' />
+<transform name='Create entry' class='Adapter.DT.PatientToEntry' source='context.PatientResponse' target='context.PatientEntry' xpos='335' ypos='600' />
+<transform name='Entry to bundle' class='Adapter.DT.EntryToBundle' source='context.PatientEntry' target='context.BundleResponse' xpos='335' ypos='700' />
 </case>
 <case condition='context.temporalDO.type = "Organization"' name='Organization' >
 <transform name='Transform organization' class='Adapter.DT.OrganizationToFHIR' source='context.temporalDO' target='context.OrganizationResponse' xpos='605' ypos='500' />
-<transform name='Create entry' class='Adapter.DT.OrganizationToEntryFHIR' source='context.OrganizationResponse ' target='context.OrganizationEntry' xpos='628' ypos='687' />
-<transform name='Entry to bundle' class='Adapter.DT.EntryToBundle' source='context.OrganizationEntry' target='context.BundleResponse' xpos='605' ypos='900' />
+<transform name='Create entry' class='Adapter.DT.OrganizationToEntryFHIR' source='context.OrganizationResponse' target='context.OrganizationEntry' xpos='605' ypos='600' />
+<transform name='Entry to bundle' class='Adapter.DT.EntryToBundle' source='context.OrganizationEntry' target='context.BundleResponse' xpos='605' ypos='700' />
 </case>
 <default name='default' />
 </switch>
-<trace value='"Paso por aqui"' xpos='200' ypos='1100' />
+<trace value='"Paso por aqui"' xpos='200' ypos='900' />
 </foreach>
 <assign name="Assign resource to Stream" property="context.JSONPayloadStream" value="context.BundleResponse.ToJSON()" action="set" xpos='470' ypos='700' />
 </true>
 <false>
-<transform name='FHIR transform' class='Adapter.DT.PatientToFHIR' source='context.FHIRObject.Resource.GetAt(1).%ToJSON()' target='context.PatientResponse' xpos='200' ypos='500' />
-<assign name="Assign resource to Stream" property="context.JSONPayloadStream" value="context.PatientResponse.ToJSON()" action="set" xpos='200' ypos='600' />
+<assign name="Create Dynamic Object" property="context.temporalDO" value="##class(%DynamicAbstractObject).%FromJSON(context.FHIRObject.Resource.GetAt(1))" action="set" xpos='200' ypos='500' />
+<transform name='FHIR transform' class='Adapter.DT.PatientToFHIR' source='context.temporalDO' target='context.PatientResponse' xpos='200' ypos='600' />
+<assign name="Assign resource to Stream" property="context.JSONPayloadStream" value="context.PatientResponse.ToJSON()" action="set" xpos='200' ypos='700' />
 </false>
 </if>
 <code name='Transform to QuickStream' xpos='200' ypos='900' >
@@ -73,5 +73,7 @@ XData BPL [ XMLNamespace = "http://www.intersystems.com/bpl" ]
 </sequence>
 </process>
 }
+
+/// BPL Definition
 
 }

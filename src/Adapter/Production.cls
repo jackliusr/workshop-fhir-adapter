@@ -13,9 +13,9 @@ XData ProductionDefinition
     <Setting Target="Host" Name="Port">44444</Setting>
   </Item>
   <Item Name="InteropService" Category="" ClassName="HS.FHIRServer.Interop.Service" PoolSize="0" Enabled="true" Foreground="false" Comment="" LogTraceEvents="false" Schedule="">
-    <Setting Target="Host" Name="TargetConfigName">GetPatientBP</Setting>
+    <Setting Target="Host" Name="TargetConfigName">ProcessFHIRBP</Setting>
   </Item>
-  <Item Name="GetPatientBP" Category="" ClassName="Adapter.BP.GetPatient" PoolSize="1" Enabled="true" Foreground="false" Comment="" LogTraceEvents="true" Schedule="">
+  <Item Name="ProcessFHIRBP" Category="" ClassName="Adapter.BP.ProcessFHIR" PoolSize="1" Enabled="true" Foreground="false" Comment="" LogTraceEvents="true" Schedule="">
   </Item>
   <Item Name="FromAdapterToHIS" Category="" ClassName="Adapter.BO.FHIROperation" PoolSize="1" Enabled="true" Foreground="false" Comment="" LogTraceEvents="true" Schedule="">
     <Setting Target="Adapter" Name="DSN">jdbc:postgresql://postgres:5432/testuser</Setting>
