@@ -12,24 +12,55 @@ XData BPL [ XMLNamespace = "http://www.intersystems.com/bpl" ]
 {
 <process language='objectscript' request='HS.FHIRServer.Interop.Request' response='HS.FHIRServer.Interop.Response' height='2000' width='2000' >
 <context>
-<property name='PatientId' type='Adapter.Message.PatientSearchRequest' instantiate='1' />
-<property name='PatientObject' type='Adapter.Message.FHIRResponse' instantiate='1' />
+<property name='FHIRObject' type='Adapter.Message.FHIRResponse' instantiate='1' />
 <property name='PatientResponse' type='HS.FHIR.DTL.vR4.Model.Resource.Patient' instantiate='1' />
 <property name='JSONPayloadStream' type='%Stream.GlobalCharacter' instantiate='1' />
+<property name='OrganizationResponse' type='HS.FHIR.DTL.vR4.Model.Resource.Organization' instantiate='1' />
+<property name='BundleResponse' type='HS.FHIR.DTL.vR4.Model.Resource.Bundle' instantiate='1' />
+<property name='k1' type='%Integer' instantiate='0' />
+<property name='temporalDO' type='%Library.DynamicObject' instantiate='0' />
+<property name='OrganizationEntry' type='HS.FHIR.DTL.vR4.Model.Element.Bundle.entry' instantiate='1' />
+<property name='PatientEntry' type='HS.FHIR.DTL.vR4.Model.Element.Bundle.entry' instantiate='1' />
 </context>
-<sequence xend='200' yend='1200' >
-<call name='Manage FHIR object' target='FromAdapterToHIS' async='0' xpos='200' ypos='400' >
+<sequence xend='200' yend='1000' >
+<call name='Manage FHIR object' target='FromAdapterToHIS' async='0' xpos='200' ypos='250' >
 <request type='HS.FHIRServer.Interop.Request' >
 <assign property="callrequest" value="request" action="set" />
 </request>
 <response type='Adapter.Message.FHIRResponse' >
-<assign property="context.PatientObject" value="callresponse" action="set" />
+<assign property="context.FHIRObject" value="callresponse" action="set" />
 </response>
 </call>
-<transform name='FHIR transform' class='Adapter.DT.PatientToFHIR' source='context.PatientObject' target='context.PatientResponse' xpos='200' ypos='800' />
-<assign name="Assign resource to Stream" property="context.JSONPayloadStream" value="context.PatientResponse.ToJSON()" action="set" xpos='200' ypos='900' />
-<trace value='"Stream assigned"' xpos='200' ypos='1000' />
-<code name='Transform to QuickStream' xpos='200' ypos='1100' >
+<if name='Check if Bundle' condition='context.FHIRObject.Resource.Size &gt; 1' xpos='200' ypos='350' xend='200' yend='800' >
+<true>
+<code name='Instantiate Bundle' xpos='470' ypos='500' >
+<![CDATA[ set context.BundleResponse = ##class(HS.FHIR.DTL.vR4.Model.Resource.Bundle).%New()]]>
+</code>
+<foreach name='Bundle loop' property='context.FHIRObject.Resource' key='context.k1' xpos='470' ypos='600' xend='200' yend='1200' >
+<assign name="Create Dynamic Object" property="context.temporalDO" value=" ##class(%DynamicAbstractObject).%FromJSON(context.FHIRObject.Resource.GetAt(context.k1))" action="set" xpos='200' ypos='250' />
+<switch xpos='200' ypos='350' xend='200' yend='1000' >
+<case condition='context.temporalDO.type = "Patient"' name='Patient' >
+<transform name='Tranform patient' class='Adapter.DT.PatientToFHIR' source='context.temporalDO' target='context.PatientResponse' xpos='335' ypos='500' />
+<transform name='Create entry' class='Adapter.DT.PatientToEntry' source='context.PatientResponse' target='context.PatientEntry' xpos='335' ypos='700' />
+<transform name='Entry to bundle' class='Adapter.DT.EntryToBundle' source='context.PatientEntry' target='context.BundleResponse' xpos='335' ypos='800' />
+</case>
+<case condition='context.temporalDO.type = "Organization"' name='Organization' >
+<transform name='Transform organization' class='Adapter.DT.OrganizationToFHIR' source='context.temporalDO' target='context.OrganizationResponse' xpos='605' ypos='500' />
+<transform name='Create entry' class='Adapter.DT.OrganizationToEntryFHIR' source='context.OrganizationResponse ' target='context.OrganizationEntry' xpos='628' ypos='687' />
+<transform name='Entry to bundle' class='Adapter.DT.EntryToBundle' source='context.OrganizationEntry' target='context.BundleResponse' xpos='605' ypos='900' />
+</case>
+<default name='default' />
+</switch>
+<trace value='"Paso por aqui"' xpos='200' ypos='1100' />
+</foreach>
+<assign name="Assign resource to Stream" property="context.JSONPayloadStream" value="context.BundleResponse.ToJSON()" action="set" xpos='470' ypos='700' />
+</true>
+<false>
+<transform name='FHIR transform' class='Adapter.DT.PatientToFHIR' source='context.FHIRObject.Resource.GetAt(1).%ToJSON()' target='context.PatientResponse' xpos='200' ypos='500' />
+<assign name="Assign resource to Stream" property="context.JSONPayloadStream" value="context.PatientResponse.ToJSON()" action="set" xpos='200' ypos='600' />
+</false>
+</if>
+<code name='Transform to QuickStream' xpos='200' ypos='900' >
 <![CDATA[ set qs=##class(HS.SDA3.QuickStream).%New()
  set response.QuickStreamId = qs.%Id()
  set copyStatus = qs.CopyFrom(context.JSONPayloadStream)

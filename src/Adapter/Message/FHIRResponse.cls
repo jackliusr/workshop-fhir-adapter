@@ -1,26 +1,18 @@
-Class Adapter.Message.FHIRResponse Extends %Persistent
+Class Adapter.Message.FHIRResponse Extends (Ens.Response, %XML.Adaptor)
 {
 
 /// Description
-Property Resource As %DynamicObject;
+Property Resource As list Of %String(MAXLEN = 50000);
 
 Storage Default
 {
 <Data name="FHIRResponseDefaultData">
+<Subscript>"FHIRResponse"</Subscript>
 <Value name="1">
-<Value>%%CLASSNAME</Value>
+<Value>Resource</Value>
 </Value>
 </Data>
-<Data name="Resource">
-<Attribute>Resource</Attribute>
-<Structure>node</Structure>
-<Subscript>"Resource"</Subscript>
-</Data>
-<DataLocation>^Adapter.Message.FHIRResponseD</DataLocation>
 <DefaultData>FHIRResponseDefaultData</DefaultData>
-<IdLocation>^Adapter.Message.FHIRResponseD</IdLocation>
-<IndexLocation>^Adapter.Message.FHIRResponseI</IndexLocation>
-<StreamLocation>^Adapter.Message.FHIRResponseS</StreamLocation>
 <Type>%Storage.Persistent</Type>
 }
 

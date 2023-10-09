@@ -15,8 +15,6 @@ XData ProductionDefinition
   <Item Name="InteropService" Category="" ClassName="HS.FHIRServer.Interop.Service" PoolSize="0" Enabled="true" Foreground="false" Comment="" LogTraceEvents="false" Schedule="">
     <Setting Target="Host" Name="TargetConfigName">GetPatientBP</Setting>
   </Item>
-  <Item Name="InteropOperation" Category="" ClassName="Adapter.BO.FHIROperation" PoolSize="1" Enabled="false" Foreground="false" Comment="" LogTraceEvents="true" Schedule="">
-  </Item>
   <Item Name="GetPatientBP" Category="" ClassName="Adapter.BP.GetPatient" PoolSize="1" Enabled="true" Foreground="false" Comment="" LogTraceEvents="true" Schedule="">
   </Item>
   <Item Name="FromAdapterToHIS" Category="" ClassName="Adapter.BO.FHIROperation" PoolSize="1" Enabled="true" Foreground="false" Comment="" LogTraceEvents="true" Schedule="">
