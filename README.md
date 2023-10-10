@@ -11,7 +11,7 @@ You can find more in-depth information in https://learning.intersystems.com.
 * [Visual Studio Code](https://code.visualstudio.com/download) + [InterSystems ObjectScript VSCode Extension](https://marketplace.visualstudio.com/items?itemName=daimor.vscode-objectscript)
 
 # Setup
-Build the image we will use during the workshop:
+Build the image that we will use during the workshop:
 
 ```console
 $ git clone https://github.com/intersystems-ib/workshop-fhir-adapter
