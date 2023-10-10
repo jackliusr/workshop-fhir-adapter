@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "Add person Copy",
+			"name": "Add person",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -38,7 +38,7 @@
 			"response": []
 		},
 		{
-			"name": "Search person Copy",
+			"name": "Search person",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -60,7 +60,7 @@
 			"response": []
 		},
 		{
-			"name": "Add person bundle Copy",
+			"name": "Add person bundle",
 			"request": {
 				"method": "POST",
 				"header": [

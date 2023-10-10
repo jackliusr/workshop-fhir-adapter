@@ -7,6 +7,9 @@ Storage Default
 <Type>%Storage.Persistent</Type>
 }
 
+/// BPL Definition
+
+/// BPL Definition
 XData BPL [ XMLNamespace = "http://www.intersystems.com/bpl" ]
 {
 <process language='objectscript' request='HS.FHIRServer.Interop.Request' response='HS.FHIRServer.Interop.Response' height='2000' width='2000' >
@@ -50,7 +53,6 @@ XData BPL [ XMLNamespace = "http://www.intersystems.com/bpl" ]
 </case>
 <default name='default' />
 </switch>
-<trace value='"Paso por aqui"' xpos='200' ypos='900' />
 </foreach>
 <assign name="Assign resource to Stream" property="context.JSONPayloadStream" value="context.BundleResponse.ToJSON()" action="set" xpos='470' ypos='700' />
 </true>
@@ -73,7 +75,5 @@ XData BPL [ XMLNamespace = "http://www.intersystems.com/bpl" ]
 </sequence>
 </process>
 }
-
-/// BPL Definition
 
 }

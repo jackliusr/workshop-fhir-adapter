@@ -16,6 +16,7 @@ XData DTL [ XMLNamespace = "http://www.intersystems.com/dtl" ]
 <assign value='source.postalCode' property='target.address.(1).postalCode' action='set' />
 <assign value='source.code' property='target.identifier.(1).value' action='set' />
 <assign value='"SNS"' property='target.identifier.(1).system' action='set' />
+<assign value='source.id' property='target.id' action='set' />
 </transform>
 }
 

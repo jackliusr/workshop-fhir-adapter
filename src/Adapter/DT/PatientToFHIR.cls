@@ -30,6 +30,7 @@ XData DTL [ XMLNamespace = "http://www.intersystems.com/dtl" ]
 <assign value='"phone"' property='target.telecom.(1).system' action='set' />
 <assign value='source.email' property='target.telecom.(2).value' action='set' />
 <assign value='"email"' property='target.telecom.(2).system' action='set' />
+<assign value='source.id' property='target.id' action='set' />
 </transform>
 }
 
