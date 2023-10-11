@@ -38,22 +38,22 @@ $ docker-compose up -d
 # How to test this project?
 ## Adding patient resouce
 * Check the PostgreSQL tables preloaded from [Adminer](http://localhost:8080/?pgsql=postgres&username=testuser&db=testuser&ns=his)
-![image](https://github.com/intersystems-ib/workshop-fhir-adapter/assets/adminer.png)
+![image](https://github.com/intersystems-ib/workshop-fhir-adapter/blob/main/assets/adminer.png)
 * Open your Postman and import file /postman/FHIR Adapter.postman_collection.json
-![image](https://github.com/intersystems-ib/workshop-fhir-adapter/assets/import.png)
+![image](https://github.com/intersystems-ib/workshop-fhir-adapter/blob/main/assets/import.png)
 * Select *Add person* and click on *Send*. You will receive as response the new resource of type *Patient* added into PostgreSQL database.
-![image](https://github.com/intersystems-ib/workshop-fhir-adapter/assets/add.png)
+![image](https://github.com/intersystems-ib/workshop-fhir-adapter/blob/main/assets/add.png)
 * Confirm that the patient has been saved into Patient table.
-![image](https://github.com/intersystems-ib/workshop-fhir-adapter/assets/new_patient.png)
+![image](https://github.com/intersystems-ib/workshop-fhir-adapter/blob/main/assets/new_patient.png)
 ## Searching patient resource
 * From Postman click on *Search person* and update URL with the ID returned for the patient from the previous point (ie.: http://localhost:52774/Adapter/r4/Patient/4)
 * Click on *Send* and confirm that the resource returned belongs to the patient created previously.
-![image](https://github.com/intersystems-ib/workshop-fhir-adapter/assets/search.png)
+![image](https://github.com/intersystems-ib/workshop-fhir-adapter/blob/main/assets/search.png)
 ## Adding patient and organization from a Bundle
 * From Postman select *Add person bundle* and check the Bundle. You will notice that we have 2 type of resources, Organization and Patient, we are going to save both of them in just one transaction.
-![image](https://github.com/intersystems-ib/workshop-fhir-adapter/assets/add_bundle.png)
+![image](https://github.com/intersystems-ib/workshop-fhir-adapter/blob/main/assets/add_bundle.png)
 * Click on *Send* again and confirm that the response from IRIS is a new Bundle:
-![image](https://github.com/intersystems-ib/workshop-fhir-adapter/assets/search_bundle.png)
+![image](https://github.com/intersystems-ib/workshop-fhir-adapter/blob/main/assets/search_bundle.png)
 
 
 
