@@ -30,7 +30,7 @@ $ docker-compose up -d
 ```
 
 # What are you going to find in this project?
-* An IRIS for Health Community version with FHIR Adapter installed and accesible from the [Management Portal](http://localhost:52774/csp/sys/UtilHome.csp) (user: superuser / password: sys):
+* An IRIS for Health Community version with FHIR Adapter installed and accesible from the [Management Portal](http://localhost:52774/csp/sys/UtilHome.csp) (user: SuperUser / password: SYS):
 * A PostgreSQL database running some basic tables to test the FHIR Adapter functionality.
 * A database explorer called [Adminer](http://localhost:8080/?pgsql=postgres&username=testuser&db=testuser&ns=his) (user: testuser / password: testpassword) with namespace and database pre-configured.
 * A Postman json file to launch the test directly from your own Postman

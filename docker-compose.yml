@@ -1,4 +1,3 @@
-version: "3.1"
 services:  
     
   # postgres
@@ -49,7 +48,7 @@ services:
       - 52774:52773
       - 51774:1972
     volumes:
-    - ./shared:/shared
+    - ./shared:/shared:rw
     environment:
-    - ISC_DATA_DIRECTORY=/shared/durable
+    - ISC_DATA_DIRECTORY=/tmp/durable
     command: --check-caps false --ISCAgent false
