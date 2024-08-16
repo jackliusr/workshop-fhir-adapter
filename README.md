@@ -26,6 +26,8 @@ With FHIR Adapter you can leverage the capability of InterSystems IRIS for Healt
 Very easy! Just run the following command to start the IRIS instance:
 
 ```console
+$ mkdir -p shared
+$ chown -R 51773:51773 shared
 $ docker-compose up -d
 ```
 

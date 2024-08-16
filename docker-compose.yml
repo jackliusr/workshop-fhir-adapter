@@ -50,5 +50,5 @@ services:
     volumes:
     - ./shared:/shared:rw
     environment:
-    - ISC_DATA_DIRECTORY=/tmp/durable
+    - ISC_DATA_DIRECTORY=/shared/durable
     command: --check-caps false --ISCAgent false
